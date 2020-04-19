@@ -12,6 +12,7 @@ To set the language:
 * Click on "Subtitles On for Disney Plus"
 * Select "Options" tab
 
+<img src="DOC/options.png" alt="Options Screenshot" width=500>
 
 ## Development
 
