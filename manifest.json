@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Disney Plus Subtitles On",
-  "version": "0.0",
+  "version": "0.1",
 
   "description": "Allows you to configure subtitles to automatically turn on to a set language.  You can specify the language with regex.  Not affiliated with Disney.",
 
@@ -24,7 +24,7 @@
 
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["*://*.disneyplus.com/*"],
       "js": ["content_scripts/subtitles-on.js"]
     }
   ]

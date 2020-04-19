@@ -7,8 +7,8 @@ Firefox Extension that automatically selects the desired subtitle language on Di
 The language input is case insensitive.  The language input optionally accepts regex.  
 
 To set the language:
-* in Firefox visit `about:addons`
-* "Extensions" on the left panel
+* In Firefox, visit `about:addons`
+* Click "Extensions" on the left panel
 * Click on "Disney Plus Subtitles On"
 * Select "Options" tab
 

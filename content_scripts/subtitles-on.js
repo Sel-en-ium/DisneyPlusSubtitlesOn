@@ -3,17 +3,25 @@
 
     var PLUGIN_NAME = "DisneyPlus-Subtitles-On-Plugin";
 
+    var subsHaveBeenSet = false;
+
     browser.storage.sync.get().then(function (data) {
         run(data);
 
-        // // Listen for pushState url changes
-        // history.pushState = ( f => function pushState(){
-        //     run(data);
-        //     return f.apply(this, arguments);
-        // })(history.pushState);
+        // Listen for pushState url changes
+        var pushStateOriginal = history.pushState;
+        function pushStateWrapper (state) {
+            run(data);
+            return pushStateOriginal.apply(history, arguments);
+        }
+        exportFunction(
+            pushStateWrapper,
+            window.history,
+            {defineAs: 'pushState', allowCallbacks: true}
+        );
 
         function run (data) {
-            turnOnSubtitles(data.subtitle_language);
+            trySubtitles(data.subtitle_language);
         }
 
     }, onError);  
@@ -22,14 +30,22 @@
      * Attempts to start the subtitles.
      * @param {string} lang - A regex string to match to subtitle name
      */
-    function turnOnSubtitles (lang) {
-        // Bail if we are not on a video page or lang is empty
-        if (!window.location.href.match(/\/video\//i) || !lang || lang === '') {
+    function trySubtitles (lang) {
+        // Bail if no lang, or if subs have already been set
+        if (!lang || lang === '' || subsHaveBeenSet) {
             return;
         }
-
-        // Wait until the player element is available, and we have the subtitles controls open
         waitUntil(function () { 
+            // Only proceed if we are on a video page, and we have not set the subtitles
+            return window.location.href.match(/\/video\//i);
+        }, function () {
+            turnOnSubtitles(lang);
+        }, 3100);
+    }
+
+    function turnOnSubtitles (lang) { 
+        // Wait until the player element is available, and we have the subtitles controls open
+        waitUntil(function () {
             // Try to get the video controls to appear
             var mediaPlayer = document.querySelector('.btm-media-player'); 
             if (mediaPlayer) {
@@ -65,19 +81,26 @@
                 }
                 // Else, select first match
                 matchedSubtitles[0].click();
+                subsHaveBeenSet = true;
                 // And exit menu
-                document.querySelector('.audio-subtitles-back').click();
-            });
-        });
+                setTimeout(() => {
+                    document.querySelector('.audio-subtitles-back').click();
+                }, 1000);
+            }, 7000);
+        }, 15000);
     }
 
-    function waitUntil (conditionFn, callback) {
+    function waitUntil (conditionFn, callback, tryForSeconds) {
+        tryForSeconds = tryForSeconds || 0;
+        if (tryForSeconds <= 0) {
+            return;
+        }
         if (conditionFn()) {
             return callback();
         }
         setTimeout(function () {
-            waitUntil(conditionFn, callback);
-        }, 300);
+            waitUntil(conditionFn, callback, tryForSeconds - 300);
+        }, 500);
     }
 
     function onError (error) {
