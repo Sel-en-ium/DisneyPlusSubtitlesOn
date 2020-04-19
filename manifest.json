@@ -1,7 +1,7 @@
 {
 
   "manifest_version": 2,
-  "name": "Disney Plus Subtitles On",
+  "name": "Subtitles On for Disney Plus",
   "version": "0.1",
 
   "description": "Allows you to configure subtitles to automatically turn on to a set language.  You can specify the language with regex.  Not affiliated with Disney.",

@@ -1,4 +1,4 @@
-# Disney Plus Subtitles On
+# Subtitles On for Disney Plus
 
 Firefox Extension that automatically selects the desired subtitle language on Disney Plus.  
 (Not affiliated with Disney.)
@@ -9,7 +9,7 @@ The language input is case insensitive.  The language input optionally accepts r
 To set the language:
 * In Firefox, visit `about:addons`
 * Click "Extensions" on the left panel
-* Click on "Disney Plus Subtitles On"
+* Click on "Subtitles On for Disney Plus"
 * Select "Options" tab
 
 
