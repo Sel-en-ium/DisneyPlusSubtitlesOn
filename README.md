@@ -15,6 +15,17 @@ To set the language:
 
 ## Development
 
+Install web-ext:  
+`npm install --global web-ext`
+
+### Testing
+
 To have plugin auto-reload, run:  
 `web-ext run`  
-(Must have web-ext installed, `npm install --global web-ext`)
+
+### Build and Release
+
+Run:  
+`web-ext build`  
+Upload here:  
+https://addons.mozilla.org/en-US/developers/
